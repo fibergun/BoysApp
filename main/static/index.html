@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sentence App</title>
+</head>
+<body>
+    <h1>Sentence App</h1>
+    <form id="sentenceForm">
+        <input type="text" id="sentenceInput" placeholder="Enter a sentence" required>
+        <button type="button" onclick="addSentence()">Add Sentence</button>
+    </form>
+    <br>
+    <button onclick="getRandomSentence()">Get Random Sentence</button>
+    <button onclick="saveSentences()">Save Sentences to Excel</button>
+    <p id="randomSentence"></p>
+
+    <script>
+        function addSentence() {
+            const input = document.getElementById('sentenceInput').value;
+            fetch('/add', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ sentence: input })
+            }).then(() => {
+                alert('Sentence added!');
+                document.getElementById('sentenceInput').value = '';
+            });
+        }
+
+        function getRandomSentence() {
+            fetch('/random')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('randomSentence').innerText = data.sentence || 'No sentences available.';
+                });
+        }
+
+        function saveSentences() {
+            fetch('/save', {
+                method: 'POST'
+            }).then(response => {
+                if (response.ok) {
+                    alert('Sentences saved to Excel!');
+                } else {
+                    alert('Failed to save sentences.');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
