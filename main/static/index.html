@@ -2,17 +2,19 @@
 <html>
 <head>
     <title>Sentence App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Sentence App</h1>
-    <form id="sentenceForm">
-        <input type="text" id="sentenceInput" placeholder="Enter a sentence" required>
-        <button type="button" onclick="addSentence()">Add Sentence</button>
-    </form>
-    <br>
-    <button onclick="getRandomSentence()">Get Random Sentence</button>
-    <button onclick="saveSentences()">Save Sentences to Excel</button>
-    <p id="randomSentence"></p>
+    <div class="container mt-5">
+        <h1 class="text-center">Sentence App</h1>
+        <form id="sentenceForm" class="mb-3">
+            <input type="text" id="sentenceInput" class="form-control mb-2" placeholder="Enter a sentence" required>
+            <button type="button" class="btn btn-primary" onclick="addSentence()">Add Sentence</button>
+        </form>
+        <button class="btn btn-success" onclick="getRandomSentence()">Get Random Sentence</button>
+        <button class="btn btn-warning" onclick="saveSentences()">Save Sentences to Excel</button>
+        <p id="randomSentence" class="mt-3"></p>
+    </div>
 
     <script>
         function addSentence() {
