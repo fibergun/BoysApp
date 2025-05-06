@@ -49,3 +49,34 @@ func LoadSentences() ([]string, error) {
 
 	return sentences, nil
 }
+
+func SaveSentencesWithPlayers(sentences []string, players []string) error {
+	file := excelize.NewFile()
+	sheetName := "Sheet1"
+	file.SetSheetName("Sheet1", sheetName)
+
+	for i, sentence := range sentences {
+		cellSentence := fmt.Sprintf("A%d", i+1)
+		file.SetCellValue(sheetName, cellSentence, sentence)
+
+		if players != nil && i < len(players) {
+			cellPlayer := fmt.Sprintf("B%d", i+1)
+			file.SetCellValue(sheetName, cellPlayer, players[i])
+		} else {
+			cellPlayer := fmt.Sprintf("B%d", i+1)
+			file.SetCellValue(sheetName, cellPlayer, "") // Clear the player name
+		}
+	}
+
+	// Debug: Print the sentences and players being saved
+	fmt.Println("Saving sentences:", sentences)
+	fmt.Println("Saving players:", players)
+
+	if err := file.SaveAs("sentences.xlsx"); err != nil {
+		fmt.Println("Error saving file:", err)
+		return err
+	}
+
+	fmt.Println("File saved successfully.")
+	return nil
+}
